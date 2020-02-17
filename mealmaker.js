@@ -8,7 +8,6 @@ const menu = {
     get appetizers () {
       return this._courses._appetizers;
     },
-    
   
     set appetizers (appetizerIn) {
         return this._courses._appetizers.push(appetizerIn);
@@ -43,65 +42,57 @@ const menu = {
         name : dishName,
         price : dishPrice
       };
-     //console.log(dish.name);
-
+     
       if ((courseName === 'appetizers') && (typeof courseName === 'string')){
-        //console.log('This is an appetizers food item');
-         return this.appetizers = dish;
+            return this.appetizers = dish;
       } else if ((courseName === 'mains') && (typeof courseName === 'string')) {
-          //console.log('This is a mains food item');
-          return this.mains = dish; 
+            return this.mains = dish; 
       } else if ((courseName === 'desserts') && (typeof courseName === 'string')) {
-        //console.log('This is a desserts food item');
-        return this.desserts = dish; 
+            return this.desserts = dish; 
       }
-      //return this.courseName = dish; //PROBLEM HERE 
-   
-    },
+     },
     
     getRandomDishFromCourse(courseName) {
-      
-      const dishes = [this.courses.courseName];
-      //console.log(dishes, this.courses.courseName);
-      const dishIndex = Math.floor(Math.random() * (dishes.length)); 
-      //console.log(dishIndex);  
-      return dishes[dishIndex];  
+        let dishes = [];
+
+       if ((courseName === 'appetizers') && (typeof courseName === 'string')) {        
+            dishes = this.appetizers.slice();
+
+      } else if ((courseName === 'mains') && (typeof courseName === 'string')) {  
+            dishes = this.mains.slice();
+
+      } else if ((courseName === 'desserts') && (typeof courseName === 'string')) { 
+            dishes = this.desserts.slice();
+      } else {
+          return `enter a valid course name: 'desserts', 'mains' or 'appetizers' !`;
+      }
+ 
+      dishIndex = Math.floor(Math.random() * dishes.length);
+      return dishes[dishIndex]; 
     },
      
     generateRandomMeal () {
-      const appetizers = this.getRandomDishFromCourse(this.appetizers);
-      //console.log(appetizers);
-      const mains = this.getRandomDishFromCourse(this.mains);
-      const desserts = this.getRandomDishFromCourse(this.desserts);
-      
-       /*return `The three course meal is {appetizer[dishName]}, {mains[dishName]}, {desserts[dishName]}, and the total price of the meal is {appetizer[dishPrice]}, {mains[dishPrice]}, {desserts[dishPrice]}`;
-        },*/
-        
-    
-  }
-  }
-  
+      const appetizers = this.getRandomDishFromCourse('appetizers');
+      const mains = this.getRandomDishFromCourse('mains');
+      const desserts = this.getRandomDishFromCourse('desserts');
+      const totalPrice = appetizers.price + mains.price + desserts.price;
+      return `Your three course meal is ${appetizers.name}, ${mains.name} and ${desserts.name}. You will be ${totalPrice} dollars out of pocket!`;
+    },      
+  };
   
   menu.addDishToCourse('appetizers', 'Caesar Salad', 4.25);
   menu.addDishToCourse('appetizers', 'Potato Salad', 3.6);
   menu.addDishToCourse('appetizers', 'Chicken Wings', 10.6);
+  menu.addDishToCourse('appetizers', 'Garlic bread', 6.54);
   menu.addDishToCourse('mains', 'Steak with mashed potatoes', 23);
   menu.addDishToCourse('mains', 'Pasta Carbonara', 18);
   menu.addDishToCourse('mains', 'Duck Soup', 32);
+  menu.addDishToCourse('mains', 'Sauerkraut and oven pork roast', 28.6);
   menu.addDishToCourse('desserts', 'Ice cream variety', 14.5);
   menu.addDishToCourse('desserts', 'New York Cheese Cake', 18.4);
   menu.addDishToCourse('desserts', 'Fruit plate', 10.2);
+  menu.addDishToCourse('desserts', 'Mountain of cookies', 10.2);
  
-
+meal = menu.generateRandomMeal();
   
-  //console.log(`The appetizers are ${menu.courses.appetizers}`);
-  //console.log(`The mains are ${menu.courses.mains}`);
-  //console.log(`The desserts are ${menu.courses.desserts}`);
-  console.log(menu.courses.appetizers);
-  console.log(menu.courses.mains);
-  console.log(menu.courses.desserts);
-
-
-    // meal = menu.generateRandomMeal();
-  
-  //console.log(meal);
+console.log(meal);
